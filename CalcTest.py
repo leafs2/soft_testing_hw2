@@ -20,6 +20,14 @@ class TestCalculator(unittest.TestCase):
     def test_modulo_positive(self):
         self.assertEqual(self.calc.modulo(10, 3), 1)
 
+    def test_modulo_negative_operands(self):
+        self.assertEqual(self.calc.modulo(-7, 3), 2)
+        self.assertEqual(self.calc.modulo(7, -3), -2)
+
+    def test_modulo_by_zero(self):
+        with self.assertRaises(ValueError):
+            self.calc.modulo(5, 0)
+
     def test_divide_by_zero(self):
         with self.assertRaises(ValueError):
             self.calc.divide(5, 0)
