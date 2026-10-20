@@ -41,5 +41,29 @@ class TestCalculator(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.calc.divide(5, 0)
 
+    # -------------------------------------------------------------
+    # Question 7: Metamorphic / Property-Based Tests
+    # -------------------------------------------------------------
+    def test_metamorphic_addition_subtraction_inverse(self):
+        """Metamorphic relation: subtract(add(a, b), b) == a"""
+        test_pairs = [(42, 17), (-15, 8), (1000, -250), (0, 99)]
+        for a, b in test_pairs:
+            with self.subTest(a=a, b=b):
+                self.assertEqual(self.calc.subtract(self.calc.add(a, b), b), a)
+
+    def test_metamorphic_addition_commutativity(self):
+        """Metamorphic relation: add(a, b) == add(b, a)"""
+        test_pairs = [(13, 29), (-50, 50), (12345, 67890)]
+        for a, b in test_pairs:
+            with self.subTest(a=a, b=b):
+                self.assertEqual(self.calc.add(a, b), self.calc.add(b, a))
+
+    def test_metamorphic_multiplication_division_inverse(self):
+        """Metamorphic relation: divide(multiply(a, b), b) == a (for b != 0)"""
+        test_pairs = [(10, 2), (-30, 5), (100, 4)]
+        for a, b in test_pairs:
+            with self.subTest(a=a, b=b):
+                self.assertEqual(self.calc.divide(self.calc.multiply(a, b), b), a)
+
 if __name__ == "__main__":
     unittest.main()
